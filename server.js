@@ -50,16 +50,15 @@ app.post('/proxy/search', async (req, res) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-      },
+      },    
       body: JSON.stringify({ url: req.body.url }),
     });
-    console.log(response.body)
-    console.log("after req")
-    const data = await response.text();
-    console.log("after req json")
+console.log("after req")
+    const data = await response.json();
+console.log("after req json")
 
     console.log(data)
-    res.status(200).send(data);
+    res.status(200).json(data);
   } catch (error) {
     console.error('Error:', error);
     res.status(500).send(error);
