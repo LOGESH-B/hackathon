@@ -49,16 +49,16 @@ app.post('/proxy/search', async (req, res) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-      },
+      },    
       body: JSON.stringify({ url: req.body.url }),
     });
 
     const data = await response.json();
     console.log(data)
-    res.json(data);
+    res.status(200).json(data);
   } catch (error) {
     console.error('Error:', error);
-    res.status(500).send('Internal Server Error');
+    res.status(500).send(error);
   }
 });
 
