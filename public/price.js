@@ -12,7 +12,7 @@ async function pricetrack() {
     const matches = search.match(/\bhttps?:\/\/\S+/gi);
     console.log(matches[0]);
     if (matches != null && matches.length > 0) {
-        fetch("https://hackathon-sphc.onrender.com/proxy/search/", { method: 'POST', headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" }, body: JSON.stringify({ url: matches[0] }), })
+        fetch("https://hackathon-n4v9.onrender.com/proxy/search/", { method: 'POST', headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" }, body: JSON.stringify({ url: matches[0] }), })
             .then((response) => response.json()).then((data) => {
                 console.log(data);
                 if (data.status) {
