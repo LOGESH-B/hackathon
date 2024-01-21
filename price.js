@@ -1,5 +1,6 @@
 
 async function pricetrack() {
+    console.log((document.getElementById("search-box").value));
     let search = (document.getElementById("search-box").value);
     search = search.trim();
     search = search.replace(/http:\/\//g, " http://");
