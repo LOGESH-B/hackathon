@@ -43,6 +43,7 @@ app.get('/get/html_content', async (req, res) => {
 
 app.post('/proxy/search', async (req, res) => {
   const targetUrl = 'https://pricehistory.app/api/search';
+  console.log("enter")
 
   try {
     const response = await fetch(targetUrl, {
@@ -52,8 +53,11 @@ app.post('/proxy/search', async (req, res) => {
       },    
       body: JSON.stringify({ url: req.body.url }),
     });
-
+    console.log( response.body)
+console.log("after req")
     const data = await response.json();
+console.log("after req json")
+
     console.log(data)
     res.status(200).json(data);
   } catch (error) {
