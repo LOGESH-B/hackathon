@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path')
 
 const app = express();
 const PORT = 3000;
@@ -10,6 +11,15 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
   });
+
+  app.set('views', path.join(__dirname, 'views'));
+  app.set('view engine', 'jade');
+
+
+app.get('/', (req,res)=>{
+
+  res.sendFile('views/pricecheck.html', {root: __dirname })
+})
 
 
 app.post('/proxy/search', async (req, res) => {

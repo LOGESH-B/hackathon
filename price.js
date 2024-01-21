@@ -1,22 +1,25 @@
 
 async function pricetrack() {
-    let search = "https://www.amazon.in/OnePlus-Wireless-Earbuds-Drivers-Playback/dp/B0C8JB3G5W/ref=lp_80662755031_1_12?pf_rd_p=9e034799-55e2-4ab2-b0d0-eb42f95b2d05&pf_rd_r=E58SZ8BWVE62B3FR38E3&sbo=RZvfv%2F%2FHxDF%2BO5021pAnSA%3D%3D";
+    let search = (document.getElementById("search-box").value);
     search = search.trim();
     search = search.replace(/http:\/\//g, " http://");
     search = search.replace(/https:\/\//g, " https://");
     search = search.replace(/https:\/\/dl.flipkart.com/g, " http://dl.flipkart.com");
-    console.log("hii");
     if (search.length == 0) {
         console.log("No serach param")
     } while (search.length > 1 && search[search.length - 1] == "=") { search = search.slice(0, -1); }
     const matches = search.match(/\bhttps?:\/\/\S+/gi);
     console.log(matches[0]);
     if (matches != null && matches.length > 0) {
-        fetch("https://pricehistory.app/" + "api/search", { method: 'POST', headers: { 'Content-Type': 'application/json','Access-Control-Allow-Origin':"*" }, body: JSON.stringify({ url: matches[0] }), })
+        fetch("https://hackathon-sphc.onrender.com/proxy/search/", { method: 'POST', headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" }, body: JSON.stringify({ url: matches[0] }), })
             .then((response) => response.json()).then((data) => {
                 console.log(data);
                 if (data.status) {
-                    // window.location.href = "https://pricehistory.app/p\/" + data.code;
+                    window.location.href = "https://pricehistory.app/p\/" + data.code;
+                    // fetch("https://pricehistory.app/p\/" + "oneplus-nord-buds-2r-true-wireless-ear-f0j3uwIm").then(res=>res.text()).then((resdata) =>{
+                    console.log(resdata);   
+                    console.log(extractAmountValues(resdata))
+                    // } )
                 }
                 else {
 
@@ -27,11 +30,32 @@ async function pricetrack() {
             });
     }
     else {
-        console.log("hiik");
         window.location.href = "https://pricehistory.app/page/search#gsc.tab=0&gsc.q=" + encodeURIComponent(search);
     }
-} ("https://www.amazon.in/OnePlus-Wireless-Earbuds-Drivers-Playback/dp/B0C8JB3G5W/ref=lp_80662755031_1_12?pf_rd_p=9e034799-55e2-4ab2-b0d0-eb42f95b2d05&pf_rd_r=E58SZ8BWVE62B3FR38E3&sbo=RZvfv%2F%2FHxDF%2BO5021pAnSA%3D%3D")
+}
 
+function extractAmountValues(htmlString) {
+    const regex = /<span class="label">(.*?)<\/span>\s*<span class="amount">(.*?)<\/span>/g;
+
+    let match;
+    const result = {};
+
+    while ((match = regex.exec(htmlString)) !== null) {
+        const label = match[1].trim();
+        const amount = match[2].trim();
+
+        result[label] = amount;
+    }
+
+    return result;
+}
+
+// Example usage with an HTML string
+const htmlString = '<div class="col-12 px-0 py-2 all-time-price-overview small">...</div>';
+const extractedValues = extractAmountValues(htmlString);
+
+// Output the values to the console (you can do whatever you want with these values)
+console.log('Extracted Values:', extractedValues);
 
 
 // document.getElementById("search-message").getElementsByTagName("span")[0].addEventListener("click", function (e) {
