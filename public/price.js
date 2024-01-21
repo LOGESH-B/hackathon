@@ -16,11 +16,11 @@ async function pricetrack() {
             .then((response) => response.json()).then((data) => {
                 console.log(data);
                 if (data.status) {
-                    window.location.href = "https://pricehistory.app/p\/" + data.code;
-                    // fetch("https://pricehistory.app/p\/" + "oneplus-nord-buds-2r-true-wireless-ear-f0j3uwIm").then(res=>res.text()).then((resdata) =>{
-                    console.log(resdata);   
+                    // window.location.href = "https://pricehistory.app/p\/" + data.code;
+                    fetch("https://pricehistory.app/p\/" + data.code).then(res=>res.text()).then((resdata) =>{
+                    // console.log(resdata);   
                     console.log(extractAmountValues(resdata))
-                    // } )
+                    } )
                 }
                 else {
 
