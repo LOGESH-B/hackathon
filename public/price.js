@@ -34,7 +34,7 @@ async function pricetrack() {
     //     window.location.href = "https://pricehistory.app/page/search#gsc.tab=0&gsc.q=" + encodeURIComponent(search);
     // }
 
-    fetch("http://localhost:3000/proxy/search", { method: 'POST', headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" }, body: JSON.stringify({ q: search }), })
+    fetch("https://hackathon-n4v9.onrender.com/proxy/search", { method: 'POST', headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" }, body: JSON.stringify({ q: search }), })
         .then((response) => response.json()).then((data) => {
             console.log(extractAmountValues(data))
 
