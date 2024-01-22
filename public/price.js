@@ -17,7 +17,7 @@ async function pricetrack() {
                 console.log(data);
                 if (data.status) {
                     // window.location.href = "https://pricehistory.app/p\/" + data.code;
-                    fetch("https://pricehistory.app/p\/" + data.code).then(res=>res.text()).then((resdata) =>{
+                    fetch("https://price-history.in/product\/" + data.code).then(res=>res.text()).then((resdata) =>{
                     // console.log(resdata);   
                     console.log(extractAmountValues(resdata))
                     } )

@@ -42,7 +42,7 @@ app.get('/get/html_content', async (req, res) => {
 
 
 app.post('/proxy/search', async (req, res) => {
-  const targetUrl = 'https://pricehistory.app/api/search';
+  const targetUrl = 'https://price-history.in/api/search';
   console.log("enter")
 
   try {
@@ -68,3 +68,4 @@ console.log("after req json")
 app.listen(PORT, () => {
   console.log(`Proxy server listening on port ${PORT}`);
 });
+
