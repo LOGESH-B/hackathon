@@ -42,22 +42,22 @@ app.get('/get/html_content', async (req, res) => {
 
 
 app.post('/proxy/search', async (req, res) => {
-  const targetUrl = 'https://price-history.in/api/search';
+  const targetUrl = 'https://www.pricebefore.com/search?q='+req.body.q+"&catagory=all";
   console.log("enter")
-
+  console.log(targetUrl)
   try {
     const response = await fetch(targetUrl, {
-      method: 'POST',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },    
-      body: JSON.stringify({ url: req.body.url }),
+      // body: JSON.stringify({ url: req.body.url }),
     });
 console.log("after req")
-    const data = await response.json();
+    const data = await response.text();
 console.log("after req json")
 
-    console.log(data)
+    // console.log(data)
     res.status(200).json(data);
   } catch (error) {
     console.error('Error:', error);
