@@ -1,4 +1,3 @@
-
 async function pricetrack() {
     console.log((document.getElementById("search-box").value));
     let search = (document.getElementById("search-box").value);
@@ -36,16 +35,13 @@ async function pricetrack() {
 
     fetch("https://hackathon-n4v9.onrender.com/proxy/search", { method: 'POST', headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': "*" }, body: JSON.stringify({ q: search }), })
         .then((response) => response.json()).then((data) => {
-            console.log(extractAmountValues(data))
+            console.log("hii")
+            var result = extractAmountValues(data);
+            console.log(result)
+            var predicted = predict(result)
+            printOnScreen(result, predicted)
 
         })
-
-
-
-
-
-
-
 }
 
 function extractAmountValues(htmlString) {
@@ -71,8 +67,8 @@ function extractAmountValues(htmlString) {
     const lowestPriceLabelElement = doc.querySelector('.lowest');
     const highestPriceLabelElement = doc.querySelector('.highest');
 
-    const lowestPriceElement=getNextSibling(lowestPriceLabelElement)
-    const highestPriceElement=getNextSibling(highestPriceLabelElement)
+    const lowestPriceElement = getNextSibling(lowestPriceLabelElement)
+    const highestPriceElement = getNextSibling(highestPriceLabelElement)
 
     function getNextSibling(element) {
         let sibling = element.nextSibling;
@@ -88,19 +84,63 @@ function extractAmountValues(htmlString) {
     const highestPrice = highestPriceElement.innerHTML.trim();
 
     // Log or use the extracted prices
-    console.log('Current Price:', currentPrice);
+    console.log('Current Price:', parseInt(currentPrice));
     console.log('Lowest Price:', lowestPrice);
     console.log('Highest Price:', highestPrice);
 
     // return result;
+    return [parseInt(currentPrice), parseInt(lowestPrice), parseInt(highestPrice)]
 }
 
-// Example usage with an HTML string
-const htmlString = '<div class="col-12 px-0 py-2 all-time-price-overview small">...</div>';
-const extractedValues = extractAmountValues(htmlString);
+function predict(prices) {
+    var cur = prices[0]
+    var high = prices[1]
+    var low = prices[2]
+    var avg = (high + low) / 2
+    var discount_prec = 15
+    // To find the original price
 
-// Output the values to the console (you can do whatever you want with these values)
-console.log('Extracted Values:', extractedValues);
+    var dis_decimal = (discount_prec) / 100
+    var original = (cur) / (1 - dis_decimal)
+
+    if (cur == low) {
+        console.log("This is the least price over the last three months");
+        return "This is the least price over the last three months"
+    }
+    else if (cur > low && cur < avg) {
+        console.log("The discount is real")
+        return "The discount is real"
+    }
+    else if (cur >= avg && cur < high) {
+        console.log("The discount may be fake");
+        return "The discount may be fake"
+    }
+    else if (cur >= high) {
+        console.log("The discount is fake, This is the highest price over the last three months");
+        return "The discount is fake, This is the highest price over the last three months"
+    }
+
+    //To find the discount percentage froom the original price (for the lowest price)
+    // var low_discount = original - low
+    // var low_discount_prec = (low_discount / original) * 100
+    // console.log("dis_decimal:", dis_decimal, " low_discount_prec:", low_discount_prec, "original:", original)
+}
+
+
+function printOnScreen(result, predicted) {
+    var data = `<td>${result[0]}</td>
+    <td>${result[1]}</td>
+    <td>${result[2]}</td>`
+
+    document.getElementById("table-data").innerHTML=data;
+    document.getElementById("predicted-data").innerText=predicted;
+}
+// Example usage with an HTML string
+// const htmlString = '<div class="col-12 px-0 py-2 all-time-price-overview small">...</div>';
+// const extractedValues = extractAmountValues(htmlString);
+
+// // Output the values to the console (you can do whatever you want with these values)
+// console.log('Extracted Values:', extractedValues);
 
 
 // document.getElementById("search-message").getElementsByTagName("span")[0].addEventListener("click", function (e) {
