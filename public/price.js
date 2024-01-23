@@ -84,12 +84,12 @@ function extractAmountValues(htmlString) {
     const highestPrice = highestPriceElement.innerHTML.trim();
 
     // Log or use the extracted prices
-    console.log('Current Price:', parseInt(currentPrice));
+    console.log('Current Price:', (currentPrice));
     console.log('Lowest Price:', lowestPrice);
     console.log('Highest Price:', highestPrice);
 
     // return result;
-    return [parseInt(currentPrice), parseInt(lowestPrice), parseInt(highestPrice)]
+    return [parseInt(parseInt(currentPrice.replace(/[^\d]/g, ''), 10)), parseInt(lowestPrice.replace(/[^\d]/g, ''), 10), parseInt(highestPrice.replace(/[^\d]/g, ''), 10)]
 }
 
 function predict(prices) {
