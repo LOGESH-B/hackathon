@@ -94,8 +94,8 @@ function extractAmountValues(htmlString) {
 
 function predict(prices) {
     var cur = prices[0]
-    var high = prices[1]
-    var low = prices[2]
+    var low = prices[1]
+    var high = prices[2]
     var avg = (high + low) / 2
     var discount_prec = 15
     // To find the original price
